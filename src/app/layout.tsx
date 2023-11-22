@@ -1,19 +1,16 @@
-import './globals.css';
+import '../styles/globals.css';
 import type { Metadata } from 'next';
 import siteMetadata from '@constants/siteMetadata';
 import Footer from '@components/Footer';
 import Header from '@components/Header';
+import { PropsWithChildren } from 'react';
 
 export const metadata: Metadata = {
   title: siteMetadata.title,
   description: siteMetadata.description,
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: PropsWithChildren) {
   return (
     <html lang={siteMetadata.language}>
       <body className="bg-white text-black antialiased">

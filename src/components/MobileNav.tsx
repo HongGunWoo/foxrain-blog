@@ -1,10 +1,9 @@
 'use client';
 
-import IconClose from '@assets/close.svg';
-import IconMenuAlt from '@assets/menu-alt.svg';
 import headerNavLinks from '@constants/headerNavLinks';
 import { useCallback, useState } from 'react';
 import CustomLink from './CustomLink';
+import { IconClose, IconMenuAlt } from 'public/svgs';
 
 const MobileNav = () => {
   const [navOpen, setNavOpen] = useState(false);

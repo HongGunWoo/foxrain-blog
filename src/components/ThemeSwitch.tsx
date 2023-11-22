@@ -1,4 +1,4 @@
-import IconNight from '@assets/night.svg';
+import { IconNight } from 'public/svgs';
 
 const ThemeSwitch = () => {
   return (
