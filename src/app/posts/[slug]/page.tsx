@@ -26,7 +26,7 @@ export default function Page({ params }: { params: { slug: string } }) {
   return (
     <article className="prose mx-auto">
       <div className="mb-8 text-center">
-        <time dateTime={post.date} className="mb-1 text-xs text-gray-600">
+        <time dateTime={post.date} className="mb-1 text-xs text-gray-500">
           {new Intl.DateTimeFormat('en-US').format(new Date(post.date))}
         </time>
         <h1 className="text-3xl font-bold">{post.title}</h1>

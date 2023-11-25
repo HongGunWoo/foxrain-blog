@@ -14,9 +14,11 @@ export default function RootLayout({ children }: PropsWithChildren) {
   return (
     <html lang={siteMetadata.language}>
       <body className="bg-white text-black antialiased">
-        <div className="mx-auto max-w-3xl px-4 sm:px-6 xl:max-w-5xl xl:px-0">
+        <div className="mx-6 max-w-3xl md:mx-auto">
           <Header />
-          <main>{children}</main>
+          <main className="flex h-screen w-full flex-col items-center justify-between">
+            {children}
+          </main>
           <Footer />
         </div>
       </body>
