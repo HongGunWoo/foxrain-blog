@@ -1,8 +1,8 @@
 import '../styles/globals.css';
 import type { Metadata } from 'next';
-import siteMetadata from '@constants/siteMetadata';
-import Footer from '@components/Footer';
-import Header from '@components/Header';
+import siteMetadata from '@/constants/siteMetadata';
+import Footer from '@/components/Footer';
+import Header from '@/components/Header';
 import { PropsWithChildren } from 'react';
 
 export const metadata: Metadata = {

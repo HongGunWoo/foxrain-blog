@@ -21,8 +21,9 @@
     "baseUrl": ".",
     "paths": {
       "contentlayer/generated": ["./.contentlayer/generated"],
-      "@components/*": ["src/components/*"],
-      "@constants/*": ["src/constants/*"]
+      "@/components/*": ["src/components/*"],
+      "@/constants/*": ["src/constants/*"],
+      "@/containers/*": ["src/containers/*"]
     }
   },
   "include": [

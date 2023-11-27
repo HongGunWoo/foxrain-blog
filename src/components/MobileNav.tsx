@@ -1,11 +1,11 @@
 'use client';
 
-import headerNavLinks from '@constants/headerNavLinks';
+import headerNavLinks from '@/constants/headerNavLinks';
 import { useCallback, useState } from 'react';
 import CustomLink from './CustomLink';
 import { IconClose, IconMenuAlt } from 'public/svgs';
 
-const MobileNav = () => {
+export default function MobileNav() {
   const [navOpen, setNavOpen] = useState(false);
 
   const onToggleNav = useCallback(() => {
@@ -40,6 +40,4 @@ const MobileNav = () => {
       </div>
     </>
   );
-};
-
-export default MobileNav;
+}

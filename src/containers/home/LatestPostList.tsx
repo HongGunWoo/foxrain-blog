@@ -1,19 +1,17 @@
+import PostPreviewItem from '@/components/PostPreviewItem';
 import { allPosts } from 'contentlayer/generated';
 import { compareDesc } from 'date-fns';
-import Link from 'next/link';
 
-export default function Posts() {
+export default function LatestPostList() {
   const posts = allPosts.sort((a, b) =>
     compareDesc(new Date(a.date), new Date(b.date)),
   );
 
   return (
-    <div className="h-full w-full">
+    <ul className="grid grid-cols-1 gap-x-5 gap-y-4 sm:grid-cols-3">
       {posts.map((post) => (
-        <Link href={post.url} key={post._id}>
-          {post.title}
-        </Link>
+        <PostPreviewItem key={post._id} post={post} />
       ))}
-    </div>
+    </ul>
   );
 }

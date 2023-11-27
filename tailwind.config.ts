@@ -7,6 +7,7 @@ const config: Config = {
     './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
     './src/components/**/*.{js,ts,jsx,tsx,mdx}',
     './src/app/**/*.{js,ts,jsx,tsx,mdx}',
+    './src/containers/**/*.{js,ts,jsx,tsx,mdx}',
   ],
   theme: {
     colors: {
@@ -24,6 +25,9 @@ const config: Config = {
       transparent: colors.transparent,
     },
     extend: {
+      aspectRatio: {
+        '5/3': '5 / 3',
+      },
       screens: {
         md: '816px',
       },

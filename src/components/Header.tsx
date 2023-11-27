@@ -1,16 +1,14 @@
-import siteMetadata from '@constants/siteMetadata';
+import siteMetadata from '@/constants/siteMetadata';
 import CustomLink from './CustomLink';
-import headerNavLinks from '@constants/headerNavLinks';
+import headerNavLinks from '@/constants/headerNavLinks';
 import ThemeSwitch from './ThemeSwitch';
 import Link from 'next/link';
 import Image from 'next/image';
 
-const Header = () => {
-  // TODO: Add a logo
-
+export default function Header() {
   return (
     <header className="my-7 space-y-1">
-      <h3 className="flex items-baseline">
+      <h1 className="flex items-baseline">
         <Link href="/">
           <Image
             src="/images/icon.png"
@@ -23,7 +21,7 @@ const Header = () => {
           {siteMetadata.headerTitle}
         </Link>
         <small className="fon-bold text-sm text-gray-400">devlog</small>
-      </h3>
+      </h1>
       <div className="flex items-center justify-between">
         <nav className="flex gap-2 font-semibold text-gray-400">
           {headerNavLinks
@@ -42,6 +40,4 @@ const Header = () => {
       </div>
     </header>
   );
-};
-
-export default Header;
+}
