@@ -9,7 +9,7 @@ const Header = () => {
   // TODO: Add a logo
 
   return (
-    <header className="my-7 flex flex-col justify-between gap-1">
+    <header className="my-7 space-y-1">
       <h3 className="flex items-baseline">
         <Link href="/">
           <Image
@@ -25,7 +25,7 @@ const Header = () => {
         <small className="fon-bold text-sm text-gray-400">devlog</small>
       </h3>
       <div className="flex items-center justify-between">
-        <nav className="space-x-4 font-semibold text-gray-400">
+        <nav className="flex gap-2 font-semibold text-gray-400">
           {headerNavLinks
             .filter((link) => link.title !== 'Home')
             .map((link) => (

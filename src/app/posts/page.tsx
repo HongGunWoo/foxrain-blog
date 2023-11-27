@@ -8,7 +8,7 @@ export default function Post() {
   );
 
   return (
-    <div>
+    <div className="h-full w-full">
       {posts.map((post) => (
         <Link href={post.url} key={post._id}>
           {post.title}

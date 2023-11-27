@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation';
 import type { MDXComponents } from 'mdx/types';
 import Link from 'next/link';
 import { useMDXComponent } from 'next-contentlayer/hooks';
+import { format } from 'date-fns';
 
 const mdxComponents: MDXComponents = {
   a: ({ href, children }) => <Link href={href as string}>{children}</Link>,
@@ -24,12 +25,12 @@ export default function Page({ params }: { params: { slug: string } }) {
   const MDXContent = useMDXComponent(post.body.code);
 
   return (
-    <article className="prose mx-auto">
-      <div className="mb-8 text-center">
-        <time dateTime={post.date} className="mb-1 text-xs text-gray-500">
-          {new Intl.DateTimeFormat('en-US').format(new Date(post.date))}
+    <article className="prose">
+      <div className="mb-8">
+        <h1 className="m-0 text-5xl">{post.title}</h1>
+        <time dateTime={post.date} className="text-xs text-gray-500">
+          {format(new Date(post.date), 'MMMM dd, yyyy')}
         </time>
-        <h1 className="text-3xl font-bold">{post.title}</h1>
       </div>
       <MDXContent components={mdxComponents} />
     </article>

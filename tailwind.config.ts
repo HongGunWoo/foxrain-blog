@@ -1,5 +1,6 @@
 import type { Config } from 'tailwindcss';
 import colors from 'tailwindcss/colors';
+import type { TransformerFn } from 'tailwindcss/types/config';
 
 const config: Config = {
   content: [
@@ -26,6 +27,15 @@ const config: Config = {
       screens: {
         md: '816px',
       },
+      typography: (theme: TransformerFn) => ({
+        DEFAULT: {
+          css: {
+            width: '100%',
+            maxWidth: 'none',
+            '--tw-prose-headings': theme('colors.black'),
+          },
+        },
+      }),
     },
   },
   plugins: [require('@tailwindcss/typography')],
