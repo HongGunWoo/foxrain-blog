@@ -8,10 +8,15 @@ export default function LatestPostList() {
   );
 
   return (
-    <ul className="grid grid-cols-1 gap-x-5 gap-y-4 sm:grid-cols-3">
-      {posts.map((post) => (
-        <PostPreviewItem key={post._id} post={post} />
-      ))}
-    </ul>
+    <div>
+      <h2 className="mb-3 border-b-2 border-gray-100 pb-1 text-3xl font-bold ">
+        Latest Posts
+      </h2>
+      <ul className="grid grid-cols-1 gap-x-5 gap-y-4 sm:grid-cols-3">
+        {posts.map((post) => (
+          <PostPreviewItem key={post._id} post={post} />
+        ))}
+      </ul>
+    </div>
   );
 }

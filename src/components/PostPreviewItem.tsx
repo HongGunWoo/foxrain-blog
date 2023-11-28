@@ -18,7 +18,7 @@ export default function PostPreviewItem({ post }: PostPreviewItemProps) {
             width={10000}
             height={1000}
             alt="dd"
-            className="aspect-5/3 mb-2 rounded-lg object-cover"
+            className="mb-1 aspect-5/3 rounded-lg object-cover"
             priority={true}
           />
           <h3 className="text-xl font-semibold leading-tight">{title}</h3>
