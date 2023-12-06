@@ -13,8 +13,8 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: PropsWithChildren) {
   return (
     <html lang={siteMetadata.language}>
-      <body className="bg-white text-black antialiased">
-        <div className="mx-6 flex h-screen max-w-3xl flex-col md:mx-auto">
+      <body>
+        <div className="mx-6 flex h-screen max-w-3xl flex-col bg-white text-black antialiased md:mx-auto">
           <Header />
           <main className="mb-auto">{children}</main>
           <Footer />

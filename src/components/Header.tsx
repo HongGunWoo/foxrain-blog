@@ -2,24 +2,23 @@ import siteMetadata from '@/constants/siteMetadata';
 import CustomLink from './CustomLink';
 import headerNavLinks from '@/constants/headerNavLinks';
 import ThemeSwitch from './ThemeSwitch';
-import Link from 'next/link';
 import Image from 'next/image';
 
 export default function Header() {
   return (
     <header className="my-7 space-y-1">
       <h1 className="flex items-baseline">
-        <Link href="/">
+        <CustomLink href="/">
           <Image
             src="/images/icon.png"
             alt="FoxRain Logo"
             width={50}
             height={50}
           />
-        </Link>
-        <Link href="/" className="mr-1 text-3xl font-bold">
+        </CustomLink>
+        <CustomLink href="/" className="mr-1 text-3xl font-bold">
           {siteMetadata.headerTitle}
-        </Link>
+        </CustomLink>
         <small className="fon-bold text-sm text-gray-400">devlog</small>
       </h1>
       <div className="flex items-center justify-between">

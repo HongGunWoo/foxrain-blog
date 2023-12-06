@@ -11,14 +11,18 @@ const mdxComponents: MDXComponents = {
   ),
 };
 
-export const generatedStaticParams = async () => {
-  allPosts.map((post) => ({ slug: post._raw.flattenedPath }));
-};
+export async function generateStaticParams() {
+  return allPosts.map((post) => ({ slug: post._raw.flattenedPath }));
+}
 
-export const generatedMetadata = ({ params }: { params: { slug: string } }) => {
+export async function generateMetadata({
+  params,
+}: {
+  params: { slug: string };
+}) {
   const post = allPosts.find((post) => post._raw.flattenedPath === params.slug);
   if (!post) notFound();
-};
+}
 
 export default function Post({ params }: { params: { slug: string } }) {
   const post = allPosts.find((post) => post._raw.flattenedPath === params.slug);
