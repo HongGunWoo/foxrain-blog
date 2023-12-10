@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import CustomLink from './CustomLink';
-import { Post } from 'contentlayer/generated';
+import type { Post } from '.contentlayer/generated/types';
 import { format } from 'date-fns';
 
 interface PostPreviewItemProps {
