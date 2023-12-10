@@ -9,8 +9,9 @@ interface PostPreviewItemProps {
 
 export default function PostPreviewItem({ post }: PostPreviewItemProps) {
   const { date, title, url } = post;
+
   return (
-    <li>
+    <li className="group">
       <CustomLink href={url}>
         <article>
           <Image
@@ -21,8 +22,13 @@ export default function PostPreviewItem({ post }: PostPreviewItemProps) {
             className="mb-1 aspect-5/3 rounded-lg object-cover"
             priority={true}
           />
-          <h3 className="text-xl font-semibold leading-tight">{title}</h3>
-          <time dateTime={date} className="block text-xs text-gray-500">
+          <h3 className="text-xl font-semibold transition-colors group-hover:text-primary">
+            {title}
+          </h3>
+          <time
+            dateTime={date}
+            className="block text-xs text-gray-500 transition-colors group-hover:text-secondary"
+          >
             {format(new Date(date), 'yyyy-MM-dd')}
           </time>
         </article>
