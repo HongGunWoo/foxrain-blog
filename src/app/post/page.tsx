@@ -1,4 +1,4 @@
-import CustomLink from '@/components/CustomLink';
+import PostList from '@/containers/post/PostList';
 import { allPosts } from 'contentlayer/generated';
 import { compareDesc } from 'date-fns';
 
@@ -9,11 +9,7 @@ export default function Posts() {
 
   return (
     <div className="h-full w-full">
-      {posts.map((post) => (
-        <CustomLink href={post.url} key={post._id}>
-          {post.title}
-        </CustomLink>
-      ))}
+      <PostList />
     </div>
   );
 }
