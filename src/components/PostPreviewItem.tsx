@@ -12,7 +12,7 @@ export default function PostPreviewItem({
   post,
   detail = false,
 }: PostPreviewItemProps) {
-  const { date, title, url, summary, body } = post;
+  const { date, title, url, summary } = post;
 
   return (
     <li className="group">
@@ -29,7 +29,7 @@ export default function PostPreviewItem({
           <div
             className={`${
               detail &&
-              'mb-2 flex flex-col gap-1 sm:mx-4 sm:justify-between sm:gap-3'
+              'mb-2 flex flex-col gap-1 sm:mx-3 sm:justify-between sm:gap-3'
             }`}
           >
             <h3
