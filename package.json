@@ -13,8 +13,10 @@
     "date-fns": "^2.30.0",
     "next": "14.0.4",
     "next-contentlayer": "^0.3.4",
+    "pliny": "^0.1.6",
     "react": "^18",
-    "react-dom": "^18"
+    "react-dom": "^18",
+    "rehype-slug": "^6.0.0"
   },
   "devDependencies": {
     "@svgr/webpack": "^8.1.0",

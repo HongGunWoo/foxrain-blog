@@ -11,6 +11,12 @@ const mdxComponents: MDXComponents = {
   ),
 };
 
+interface Toc {
+  url: string;
+  value: string;
+  depth: number;
+}
+
 export async function generateStaticParams() {
   return allPosts.map((post) => ({ slug: post._raw.flattenedPath }));
 }
@@ -41,13 +47,17 @@ export default function Post({ params }: { params: { slug: string } }) {
         </div>
         <MDXContent components={mdxComponents} />
       </article>
-      {/* <aside className="fixed right-5 top-0">
+      <aside className="fixed right-5 top-0">
         <nav>
           <ul>
-            <li></li>
+            {post.toc.map((item: Toc) => (
+              <li key={item.url}>
+                <CustomLink href={item.url}>{item.value}</CustomLink>
+              </li>
+            ))}
           </ul>
         </nav>
-      </aside> */}
+      </aside>
     </div>
   );
 }
