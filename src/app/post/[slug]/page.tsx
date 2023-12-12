@@ -4,18 +4,13 @@ import type { MDXComponents } from 'mdx/types';
 import { useMDXComponent } from 'next-contentlayer/hooks';
 import { format } from 'date-fns';
 import CustomLink from '@/components/CustomLink';
+import TocSide from '@/containers/post/slug/TocSide';
 
 const mdxComponents: MDXComponents = {
   a: ({ href, children }) => (
     <CustomLink href={href as string}>{children}</CustomLink>
   ),
 };
-
-interface Toc {
-  url: string;
-  value: string;
-  depth: number;
-}
 
 export async function generateStaticParams() {
   return allPosts.map((post) => ({ slug: post._raw.flattenedPath }));
@@ -45,19 +40,9 @@ export default function Post({ params }: { params: { slug: string } }) {
             {format(new Date(post.date), 'MMMM dd, yyyy')}
           </time>
         </div>
+        <TocSide toc={post.toc} />
         <MDXContent components={mdxComponents} />
       </article>
-      <aside className="fixed right-5 top-0">
-        <nav>
-          <ul>
-            {post.toc.map((item: Toc) => (
-              <li key={item.url}>
-                <CustomLink href={item.url}>{item.value}</CustomLink>
-              </li>
-            ))}
-          </ul>
-        </nav>
-      </aside>
     </div>
   );
 }
