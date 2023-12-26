@@ -3,6 +3,7 @@ import colors from 'tailwindcss/colors';
 import type { TransformerFn } from 'tailwindcss/types/config';
 
 const config: Config = {
+  darkMode: 'class',
   content: [
     './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
     './src/components/**/*.{js,ts,jsx,tsx,mdx}',
@@ -37,7 +38,7 @@ const config: Config = {
           css: {
             width: '100%',
             maxWidth: 'none',
-            '--tw-prose-headings': theme('colors.black'),
+            // '--tw-prose-headings': theme('colors.black'),
           },
         },
       }),

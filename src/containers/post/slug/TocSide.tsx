@@ -60,7 +60,7 @@ export default function TocSide({ toc }: TocSideProps) {
           {toc.map((t) => (
             <li
               key={t.url}
-              className={` transition-all ${
+              className={`transition-all ${
                 t.value === activeToc
                   ? 'text-[0.7rem] font-semibold text-primary'
                   : 'text-[0.65rem] text-gray-300'

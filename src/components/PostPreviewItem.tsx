@@ -35,18 +35,18 @@ export default function PostPreviewItem({
             <h3
               className={`${
                 detail ? 'text-2xl' : 'text-xl'
-              } line-clamp-1 font-semibold transition-colors group-hover:text-primary`}
+              } line-clamp-1 font-semibold group-hover:text-primary group-hover:transition-colors`}
             >
               {title}
             </h3>
             {detail && (
-              <p className="line-clamp-4 overflow-hidden text-ellipsis group-hover:text-secondary">
+              <p className="line-clamp-4 overflow-hidden text-ellipsis group-hover:text-secondary group-hover:transition-colors">
                 {summary}
               </p>
             )}
             <time
               dateTime={date}
-              className="block text-xs text-gray-500 transition-colors group-hover:text-secondary"
+              className="block text-xs text-gray-500 group-hover:text-secondary group-hover:transition-colors"
             >
               {format(new Date(date), 'yyyy-MM-dd')}
             </time>
