@@ -6,6 +6,7 @@ import Header from '@/components/Header';
 import { PropsWithChildren } from 'react';
 import { NextThemeProvider } from './NextThemeProvider';
 import { GeistSans } from 'geist/font/sans';
+import { GeistMono } from 'geist/font/mono';
 
 export const metadata: Metadata = {
   title: siteMetadata.title,
@@ -17,7 +18,7 @@ export default function RootLayout({ children }: PropsWithChildren) {
     <html
       lang={siteMetadata.language}
       suppressHydrationWarning
-      className={`${GeistSans.variable}`}
+      className={`${GeistSans.variable} ${GeistMono.variable}`}
     >
       <body className="bg-white text-black transition-colors dark:bg-black dark:text-white">
         <NextThemeProvider>

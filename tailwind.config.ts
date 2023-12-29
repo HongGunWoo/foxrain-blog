@@ -29,6 +29,7 @@ const config: Config = {
     extend: {
       fontFamily: {
         sans: ['var(--font-geist-sans)'],
+        mono: ['var(--font-geist-mono)'],
       },
       aspectRatio: {
         '5/3': '5 / 3',
