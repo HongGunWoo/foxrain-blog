@@ -27,6 +27,9 @@ const config: Config = {
       transparent: colors.transparent,
     },
     extend: {
+      fontFamily: {
+        sans: ['var(--font-geist-sans)'],
+      },
       aspectRatio: {
         '5/3': '5 / 3',
       },
