@@ -9,7 +9,7 @@ export default function MyInfo() {
         alt="profile"
         width={200}
         height={200}
-        className="h-36 w-36 rounded-full border border-gray-100 shadow-lg"
+        className="dark:border-gray-600 h-36 w-36 rounded-full border border-gray-100 transition-colors"
       />
       <div className="shrink-0">
         <p className="whitespace-pre-line text-xl">

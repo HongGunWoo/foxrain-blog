@@ -46,7 +46,7 @@ export default function PostPreviewItem({
             )}
             <time
               dateTime={date}
-              className="block text-xs text-gray-500 group-hover:text-secondary group-hover:transition-colors"
+              className="block text-xs text-gray-300 group-hover:text-secondary group-hover:transition-colors"
             >
               {format(new Date(date), 'yyyy-MM-dd')}
             </time>

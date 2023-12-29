@@ -23,7 +23,8 @@
       "contentlayer/generated": ["./.contentlayer/generated"],
       "@/components/*": ["src/components/*"],
       "@/constants/*": ["src/constants/*"],
-      "@/containers/*": ["src/containers/*"]
+      "@/containers/*": ["src/containers/*"],
+      "@/styles/*": ["src/styles/*"]
     }
   },
   "include": [

@@ -1,3 +1,4 @@
+import '@/styles/prism.css';
 import { allPosts } from 'contentlayer/generated';
 import { notFound } from 'next/navigation';
 import type { MDXComponents } from 'mdx/types';
@@ -10,6 +11,7 @@ const mdxComponents: MDXComponents = {
   a: ({ href, children }) => (
     <CustomLink href={href as string}>{children}</CustomLink>
   ),
+  // pre: ({ children }) => <Pre>{children}</Pre>,
 };
 
 export async function generateStaticParams() {
@@ -33,11 +35,11 @@ export default function Post({ params }: { params: { slug: string } }) {
 
   return (
     <div className="relative">
-      <article className="prose">
+      <article className="prose dark:prose-invert">
         <div className="mb-8 space-y-6">
           <h1 className="mb-2 text-5xl">{post.title}</h1>
-          <time dateTime={post.date} className="text-xs text-gray-500">
-            {format(new Date(post.date), 'MMMM dd, yyyy')}
+          <time dateTime={post.date} className="text-sm text-gray-300">
+            {format(new Date(post.date), 'yyyy-MM-dd')}
           </time>
         </div>
         <TocSide toc={post.toc} />
