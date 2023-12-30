@@ -9,9 +9,13 @@ import TocSide from '@/containers/post/slug/TocSide';
 
 const mdxComponents: MDXComponents = {
   a: ({ href, children }) => (
-    <CustomLink href={href as string}>{children}</CustomLink>
+    <CustomLink
+      href={href as string}
+      className="rounded-md p-[0.2rem] decoration-gray-100 underline-offset-4 after:text-xs after:content-['_↗'] hover:bg-gray-100 dark:decoration-gray-300 dark:hover:bg-gray-300"
+    >
+      {children}
+    </CustomLink>
   ),
-  // pre: ({ children }) => <Pre>{children}</Pre>,
 };
 
 export async function generateStaticParams() {

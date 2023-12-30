@@ -10,9 +10,9 @@ interface TocSideProps {
 
 const depthStyles: Record<number, string> = {
   1: 'pl-0',
-  2: 'pl-3',
-  3: 'pl-6',
-  4: 'pl-9',
+  2: 'pl-2',
+  3: 'pl-4',
+  4: 'pl-6',
 };
 
 const getScrollTop = () => {
@@ -55,7 +55,7 @@ export default function TocSide({ toc }: TocSideProps) {
 
   return (
     <div className="not-prose relative">
-      <nav className="absolute left-full hidden w-96 lg:block">
+      <nav className="absolute left-full hidden lg:block">
         <ul className="fixed ml-9 space-y-1 border-l-2 py-1 pl-2">
           {toc.map((t) => (
             <li
