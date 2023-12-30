@@ -7,9 +7,11 @@ export default function MyInfo() {
       <Image
         src="/images/profile.jpeg"
         alt="profile"
-        width={200}
-        height={200}
-        className="h-36 w-36 rounded-full border border-gray-100 transition-colors dark:border-gray-600"
+        priority={true}
+        quality={100}
+        width={144}
+        height={144}
+        className="rounded-full border border-gray-100 transition-colors dark:border-gray-600"
       />
       <div className="shrink-0">
         <p className="whitespace-pre-line text-xl">

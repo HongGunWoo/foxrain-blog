@@ -24,8 +24,10 @@ const config: Config = {
       },
       black: '#141414',
       white: colors.white,
-      primary: '#ee8a4a',
-      secondary: '#57392d',
+      primary: '#ED960B	',
+      secondary: '#C46500	',
+      cream: '#ECE1CB	',
+      brown: '#1B0C04',
       transparent: colors.transparent,
     },
     extend: {

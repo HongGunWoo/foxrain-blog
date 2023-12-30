@@ -11,11 +11,12 @@ export default function Header() {
         <Image
           src="/images/icon.png"
           alt="FoxRain Logo"
-          width={50}
-          height={50}
+          width={48}
+          height={48}
+          quality={100}
+          priority={true}
         />
-
-        <div className="mr-1 text-3xl font-bold">
+        <div className="-ml-1 text-3xl font-bold">
           {siteMetadata.headerTitle}
         </div>
         <small className="fon-bold text-sm text-gray-300 transition-colors group-hover:text-primary">
