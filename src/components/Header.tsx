@@ -9,7 +9,6 @@ import { useEffect, useRef } from 'react';
 import getScrollTop from '@/utils/getScrollTop';
 
 export default function Header() {
-  const intervalId = useRef(null);
   const logoRef = useRef<HTMLImageElement>(null);
   const navRef = useRef<HTMLDivElement>(null);
   const navContainerRef = useRef<HTMLDivElement>(null);
@@ -21,29 +20,27 @@ export default function Header() {
         return;
 
       const scrollTop = getScrollTop();
-      console.log(scrollTop);
-      if (Math.abs(lastScrollTop.current - scrollTop) <= 5) return;
 
       let navTranslateX = `${Math.min((scrollTop * 2) / 95, 2)}rem`;
       let logoScale = Math.max(1 - (scrollTop * 11) / 1840, 0.45);
-      let logoTranslateX = `${Math.max((scrollTop * -3) / 184 + 0, -1.5)}rem`;
-      let logoTranslateY = `${Math.max((scrollTop * -11) / 184 + 0, -5.5)}rem`;
+      let logoTranslateX = `${Math.max((scrollTop * -17) / 920 + 0, -1.7)}rem`;
+      let logoTranslateY = `${Math.max((scrollTop * -52) / 920 + 0, -5.2)}rem`;
       let navContainerTranslateY = '0';
 
-      if (scrollTop <= 10) {
-        navTranslateX = '0';
-        logoScale = 1;
-        logoTranslateX = '0';
-        logoTranslateY = '0';
+      if (scrollTop >= lastScrollTop.current && scrollTop > 500) {
+        navContainerTranslateY = '-100%';
+        logoTranslateY = '-10rem';
+        logoRef.current.classList.add('transition-transform');
+        logoRef.current.classList.add('duration-500');
+        lastScrollTop.current = scrollTop;
+      } else if (scrollTop < lastScrollTop.current + 2) {
+        navContainerTranslateY = '0';
+        lastScrollTop.current = scrollTop;
       }
-
-      // if (scrollTop > lastScrollTop.current + 5 && scrollTop > 200) {
-      //   navContainerTranslateY = '-100%';
-      //   lastScrollTop.current = scrollTop;
-      // } else if (scrollTop < lastScrollTop.current + 5) {
-      //   navContainerTranslateY = '0';
-      //   lastScrollTop.current = scrollTop;
-      // }
+      if (scrollTop <= 500) {
+        logoRef.current.classList.remove('transition-transform');
+        logoRef.current.classList.remove('duration-500');
+      }
 
       logoRef.current.style.transform = `scale(${logoScale}) translate(${logoTranslateX}, ${logoTranslateY})`;
       navRef.current.style.transform = `translateX(${navTranslateX})`;
@@ -78,7 +75,7 @@ export default function Header() {
         </CustomLink>
       </header>
       <div
-        className="sticky top-0 z-[999] mb-7 flex h-8 items-center justify-between backdrop-blur-sm"
+        className="sticky top-0 z-[999] mb-7 flex h-9 items-center justify-between backdrop-blur-sm transition-transform duration-500"
         ref={navContainerRef}
       >
         <nav className="flex gap-2 font-semibold text-gray-300" ref={navRef}>

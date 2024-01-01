@@ -24,9 +24,9 @@ export default function ThemeSwitch() {
   return (
     <button aria-label="Toggle Dark Mode" onClick={handleToggleTheme}>
       {resolvedTheme === 'dark' || theme === 'dark' ? (
-        <IconNight className="h-8 w-8 fill-primary" />
+        <IconNight className="h-6 w-6 fill-primary" />
       ) : (
-        <IconSun className="h-8 w-8 fill-primary stroke-primary" />
+        <IconSun className="h-6 w-6 fill-primary stroke-primary" />
       )}
     </button>
   );
