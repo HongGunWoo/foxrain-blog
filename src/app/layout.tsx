@@ -96,9 +96,9 @@ export default function RootLayout({ children }: PropsWithChildren) {
         content="/favicons/ms-icon-144x144.png"
       />
       <meta name="theme-color" content="#ffffff" />
-      <body className="bg-white text-black transition-colors dark:bg-black dark:text-white">
+      <body className="h-screen bg-white text-black transition-colors dark:bg-black dark:text-white">
         <NextThemeProvider>
-          <div className="mx-6 flex h-screen max-w-3xl flex-col antialiased md:mx-auto">
+          <div className="mx-6 flex h-fit min-h-screen max-w-3xl flex-col antialiased md:mx-auto">
             <Header />
             <main className="mb-auto">{children}</main>
             <Footer />

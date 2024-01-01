@@ -1,6 +1,7 @@
 'use client';
 
 import CustomLink from '@/components/CustomLink';
+import getScrollTop from '@/utils/getScrollTop';
 import type { Toc } from 'pliny/mdx-plugins/remark-toc-headings.js';
 import { useCallback, useEffect, useState } from 'react';
 
@@ -13,15 +14,6 @@ const depthStyles: Record<number, string> = {
   2: 'pl-2',
   3: 'pl-4',
   4: 'pl-6',
-};
-
-const getScrollTop = () => {
-  if (!document.body) return 0;
-  if (document.documentElement && 'scrollTop' in document.documentElement) {
-    return document.documentElement.scrollTop || document.body.scrollTop;
-  } else {
-    return document.body.scrollTop;
-  }
 };
 
 export default function TocSide({ toc }: TocSideProps) {
