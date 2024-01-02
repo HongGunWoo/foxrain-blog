@@ -3,7 +3,6 @@
 import { useTheme } from 'next-themes';
 import { useEffect, useState } from 'react';
 import { IconNight, IconSun } from 'public/svgs';
-import { set } from 'date-fns';
 
 export default function ThemeSwitch() {
   const [mounted, setMounted] = useState(false);

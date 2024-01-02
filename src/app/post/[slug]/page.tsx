@@ -6,6 +6,7 @@ import { useMDXComponent } from 'next-contentlayer/hooks';
 import { format } from 'date-fns';
 import CustomLink from '@/components/CustomLink';
 import TocSide from '@/containers/post/slug/TocSide';
+import Giscus from '@/components/Giscus';
 
 const mdxComponents: MDXComponents = {
   a: ({ href, children }) => (
@@ -48,6 +49,7 @@ export default function Post({ params }: { params: { slug: string } }) {
         </div>
         <TocSide toc={post.toc} />
         <MDXContent components={mdxComponents} />
+        <Giscus />
       </article>
     </div>
   );
