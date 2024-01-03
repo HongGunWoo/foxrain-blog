@@ -1,15 +1,40 @@
+import PostTag from '@/components/PostTag';
 import PostList from '@/containers/post/PostList';
-import { allPosts } from 'contentlayer/generated';
-import { compareDesc } from 'date-fns';
+import getAllPostTags from '@/utils/getAllPostTags';
 
-export default function Posts() {
-  const posts = allPosts.sort((a, b) =>
-    compareDesc(new Date(a.date), new Date(b.date)),
-  );
+export default function Posts({
+  searchParams,
+}: {
+  searchParams: { tag: string | undefined };
+}) {
+  const postTagsCount = getAllPostTags();
+  const activeTag = searchParams.tag;
 
   return (
     <div className="h-full w-full">
-      <PostList />
+      <div className="mb-7 flex w-full gap-2 overflow-y-auto">
+        <PostTag
+          tag="All"
+          className={
+            !activeTag
+              ? '!bg-primary !text-white'
+              : '!text-gray-500  dark:!text-gray-200 '
+          }
+        />
+        {Object.keys(postTagsCount).map((tag) => (
+          <PostTag
+            key={tag}
+            tag={tag}
+            count={postTagsCount[tag]}
+            className={
+              activeTag === tag
+                ? '!bg-primary !text-white'
+                : '!text-gray-500  dark:!text-gray-100 '
+            }
+          />
+        ))}
+      </div>
+      <PostList activeTag={activeTag} />
     </div>
   );
 }

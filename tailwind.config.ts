@@ -25,6 +25,7 @@ const config: Config = {
       black: '#141414',
       white: colors.white,
       primary: '#ED960B	',
+      subPrimary: '#e4ac52',
       secondary: '#C46500	',
       cream: '#ECE1CB	',
       brown: '#1B0C04',
