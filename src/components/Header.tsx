@@ -60,7 +60,7 @@ export default function Header() {
             src="/images/icon.png"
             alt="FoxRain Logo"
             width={48}
-            height={48}
+            height={56}
             quality={100}
             priority={true}
             className="fixed z-[1000]"

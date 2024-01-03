@@ -24,7 +24,7 @@ export default function PostPreviewItem({
             width={detail ? 500 : 5000}
             height={detail ? 180 : 3000}
             alt={`${title} image`}
-            className={`mb-1 aspect-5/3 rounded-lg object-cover ${
+            className={`mb-1 aspect-5/3 w-full rounded-lg object-cover ${
               detail && 'sm:min-w-[20rem]'
             }`}
             priority={true}
