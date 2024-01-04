@@ -23,8 +23,8 @@ export default function Header() {
 
       let navTranslateX = `${Math.min((scrollTop * 2) / 95, 2)}rem`;
       let logoScale = Math.max(1 - (scrollTop * 11) / 1840, 0.45);
-      let logoTranslateX = `${Math.max((scrollTop * -17) / 920 + 0, -1.7)}rem`;
-      let logoTranslateY = `${Math.max((scrollTop * -52) / 920 + 0, -5.2)}rem`;
+      let logoTranslateX = `${Math.max((scrollTop * -17) / 920, -1.7)}rem`;
+      let logoTranslateY = `${Math.max((scrollTop * -52) / 920, -5.2)}rem`;
       let navContainerTranslateY = '0';
 
       if (scrollTop >= lastScrollTop.current && scrollTop > 500) {
