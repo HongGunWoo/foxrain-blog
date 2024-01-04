@@ -12,7 +12,7 @@ export default function LatestPostList() {
       <h2 className="mb-3 border-b-2 border-gray-100 pb-1 text-3xl font-bold ">
         Latest Posts
       </h2>
-      <ul className="grid grid-cols-1 gap-5 sm:grid-cols-3">
+      <ul className="grid grid-cols-1 gap-7 sm:grid-cols-3 sm:gap-5">
         {posts.map((post) => (
           <PostPreviewItem key={post._id} post={post} />
         ))}

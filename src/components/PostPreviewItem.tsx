@@ -13,7 +13,9 @@ export default function PostPreviewItem({
   post,
   detail = false,
 }: PostPreviewItemProps) {
-  const { date, title, url, summary } = post;
+  const { date, title, url, summary, body } = post;
+
+  console.log(summary);
 
   return (
     <li>
@@ -31,9 +33,8 @@ export default function PostPreviewItem({
           />
         </CustomLink>
         <div
-          className={`${
-            detail &&
-            'mb-2 flex flex-col gap-1 sm:mx-3 sm:justify-between sm:gap-3'
+          className={`flex flex-col sm:justify-between ${
+            detail && 'mb-2 mt-1 gap-1 sm:mx-3 sm:gap-3'
           }`}
         >
           <CustomLink
@@ -42,7 +43,7 @@ export default function PostPreviewItem({
           >
             <h1
               className={`${
-                detail ? 'text-2xl' : 'text-xl'
+                detail ? 'text-xl' : 'text-lg'
               } line-clamp-1 font-semibold `}
             >
               {title}
@@ -50,17 +51,20 @@ export default function PostPreviewItem({
           </CustomLink>
           {detail && (
             <p className="line-clamp-3 overflow-hidden text-ellipsis">
-              {summary}
+              {summary || body.raw}
             </p>
           )}
           {detail && (
-            <div className="flex gap-2">
+            <div className="my-3 flex gap-2 sm:my-1">
               {post.tags.map((tag) => (
                 <PostTag key={tag} tag={tag} />
               ))}
             </div>
           )}
-          <time dateTime={date} className="block text-xs text-gray-300">
+          <time
+            dateTime={date}
+            className="ml-[1px] block text-xs text-gray-300"
+          >
             {format(new Date(date), 'yyyy-MM-dd')}
           </time>
         </div>
