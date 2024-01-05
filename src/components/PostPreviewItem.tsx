@@ -15,8 +15,6 @@ export default function PostPreviewItem({
 }: PostPreviewItemProps) {
   const { date, title, url, summary, body } = post;
 
-  console.log(summary);
-
   return (
     <li>
       <article className={`${detail && 'flex flex-col sm:flex-row'}`}>
@@ -33,8 +31,8 @@ export default function PostPreviewItem({
           />
         </CustomLink>
         <div
-          className={`flex flex-col sm:justify-between ${
-            detail && 'mb-2 mt-1 gap-1 sm:mx-3 sm:gap-3'
+          className={`flex flex-col gap-1 sm:justify-between ${
+            detail && 'mb-2 mt-1 sm:mx-3 sm:gap-3'
           }`}
         >
           <CustomLink
@@ -44,7 +42,7 @@ export default function PostPreviewItem({
             <h1
               className={`${
                 detail ? 'text-xl' : 'text-lg'
-              } line-clamp-1 font-semibold `}
+              } font-semibold leading-5`}
             >
               {title}
             </h1>

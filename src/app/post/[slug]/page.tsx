@@ -42,7 +42,7 @@ export default function Post({ params }: { params: { slug: string } }) {
     <div className="relative">
       <article className="prose dark:prose-invert">
         <div className="mb-8 space-y-6">
-          <h1 className="mb-2 text-5xl">{post.title}</h1>
+          <h1 className="mb-2 text-4xl">{post.title}</h1>
           <time dateTime={post.date} className="text-sm text-gray-300">
             {format(new Date(post.date), 'yyyy-MM-dd')}
           </time>
