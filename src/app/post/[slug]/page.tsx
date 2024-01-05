@@ -7,6 +7,7 @@ import { format } from 'date-fns';
 import CustomLink from '@/components/CustomLink';
 import TocSide from '@/containers/post/slug/TocSide';
 import Giscus from '@/components/Giscus';
+import Image from 'next/image';
 
 const mdxComponents: MDXComponents = {
   a: ({ href, children }) => (
@@ -40,7 +41,7 @@ export default function Post({ params }: { params: { slug: string } }) {
 
   return (
     <div className="relative">
-      <article className="prose dark:prose-invert">
+      <article className="prose dark:prose-invert prose-img:mx-auto">
         <div className="mb-8 space-y-6">
           <h1 className="mb-2 text-4xl">{post.title}</h1>
           <time dateTime={post.date} className="text-sm text-gray-300">

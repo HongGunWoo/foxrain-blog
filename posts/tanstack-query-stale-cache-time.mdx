@@ -1,124 +1,149 @@
 ---
-title: TanstackQuery stale, cache의 차이
+title: Tanstack Query stale, cache time의 차이
 date: 2023-09-23
-tags: ['javascript']
+tags: ['Tanstack Query']
+summary: 'tanstack query v4의 stale time과 cache time의 개념을 알아보며 stale time 개념을 사용해 API 재요청 문제를 해결해보자.'
 ---
 
-## 구현 내용
+1인 가구를 타겟으로한 SNS 프로젝트를 개발하면서 **tanstack query v4**를 사용해 비동기 상태 관리를 하고있다.
+**tanstack query**의 장점 중 하나는 Data Caching을 통한 불필요한 네트워크 요청 방지라고 생각한다.
+이는 유니크한 키 값으로 API 반환 값을 저장하여 동일한 네트워크 요청 발생 시, 저장된 값을 재사용하는 것이다.
 
-useUser를 사용시 auth-user api가 계속해서 요청되는 문제를 해결했습니다.
+하지만, 프로젝트 개발 진행 중 동일한 queryFn을 가진 useQuery hook을 사용해도 페이지가 변경될 때마다 API 재요청이 일어나는 문제가 발생했다.
+이를 해결하기 위해 사용했던 tanstack query의 **stale time**의 개념과 헷갈렸던 **cache time**의 개념을 정리해보고자 한다.
 
-### 해결 전
+## useQuery의 API 재요청 문제
 
-https://github.com/prgrms-fe-devcourse/FEDC4_HONKOK_JunilHwang/assets/45515388/a8c81e4e-b670-4291-b854-fb29ac6a994d
+SNS 프로젝트의 api 중 **/auth-user** API는 사용자의 이름, 사용자에게 온 알람, 작성한 게시글의 ID 등 많은 컴포넌트에서 사용되는 사용자 데이터를 반환하는 데이터이다.
+그렇기 때문에 해당 API를 사용하는 useQuery hook을 custom hook으로 개발해 사용할 필요가 있었다.
 
-### 해결 후
+```js {12-16} showLineNumbers
+const getUser = async () => {
+  const { data } = await snsApiClient.get('/auth-user');
 
-https://github.com/prgrms-fe-devcourse/FEDC4_HONKOK_JunilHwang/assets/45515388/13680b55-5cc7-4d14-98ab-5c91255bf779
+  // ...
 
-### 이유
+  return data;
+};
 
-react query는 stale time default 값이 0이라고 합니다.
-즉 api 요청 후 반환 값은 다시 fetching 받아와야할 데이터(stale한 데이터)라고 간주해서 발생하는 문제였습니다.
-
-https://github.com/prgrms-fe-devcourse/FEDC4_HONKOK_JunilHwang/assets/45515388/4e10dee9-5937-4224-870a-37037f15c59a
-
-위의 동영상을 보면 user 키를 가진 query가 바로 stale 상태로 넘어가는 것을 확인할 수 있습니다.
-
-이를 해결하기 위해 useQuery에 `staleTime: Infinity, cacheTime: Infinity,` 옵션을 추가해서 해결할 수 있었습니다.
-
-https://github.com/prgrms-fe-devcourse/FEDC4_HONKOK_JunilHwang/assets/45515388/7a2db500-8f00-49d0-b4aa-0986b58151fc
-
-user 키를 가진 query가 계속 fresh 상태를 유지해서 더이상 auth-user api를 호출하지 않는 것을 볼 수 있습니다.
-
-만약 user의 상태가 변경되는 작업(ex likePost, 팔로우, 언팔로우 등...)을 한다면 아래의 코드처럼 쿼리 무효화를 사용해 다시 user상태를 불러오는 작업이 필요합니다.
-
-```
-export const useEditFullName = () => {
+const useUser = () => {
   const queryClient = useQueryClient();
 
-  return useMutation({
-    mutationFn: editFullName,
-    onSuccess: async () => {
-      await queryClient.invalidateQueries(userKeys.user);
-    }
+  const { data: user } = useQuery<User>({
+    queryKey: userKeys.user,
+    queryFn: getUser,
+    suspense: true
   });
+
+  if (user !== null) {
+    assert(user);
+  }
+
+  const initialUser = (user: User, token: string) => {
+    // ...
+  };
+
+  const clearUser = () => {
+    // ...
+  };
+
+  return { user, clearUser, initialUser };
 };
+
+export default useUser;
 ```
 
-### staletime과 cachetime 이란??
+하지만 아래와 같이 useUser hook을 사용하는 페이지로 이동할 때마다 auth-user API를 재요청하는 문제가 발생했다.
 
-[Why cacheTime in React Query should always be bigger than staleTime](https://www.codemzy.com/blog/react-query-cachetime-staletime)
+<img
+  src="/images/posts/tanstack-query-stale-cache-time/1_before.png"
+  width="350px"
+/>
 
-아래의 내용은 위의 링크 내용 중 일부분 입니다.
+### 문제 원인과 해결
 
-cacheTime과 staleTime을 혼동할 수 있는데, 이 두 옵션은 모두 캐시의 데이터와 관련이 있지만 데이터에 대해 서로 다른 것을 제어합니다.
+tanstack query는 [stale time default 값이 0](https://tanstack.com/query/v4/docs/react/reference/useQuery)이라고 한다.
+즉 api 요청 후 반환 값은 다시 fetching 받아와야할 데이터(stale한 데이터)라고 간주하는데 여러 페이지에서 사용되는 useUser는 동시에 api를 요청하는 것이 아닌
+페이지가 변경될 때마다 재요청하기 때문에 발생하는 문제였다.
 
-간단히 요약하면 다음과 같습니다:
+따라서 **auth-user**의 반환 값이 stale한 데이터로 상태가 변경되지 않도록 설정하면 이 문제를 해결할 수 있다.
+stale time을 변경하기 위해선 useQuery의 **staleTime** 옵션을 사용하면 된다.
 
-### cacheTime
+```diff-js
+const useUser = () => {
+  const queryClient = useQueryClient();
 
-cacheTime은 캐시에서 비활성 데이터를 삭제하기 전에 React Query가 저장하는 기간입니다.
-cacheTime의 기본값은 5분입니다.
-
-### staleTime
-
-staleTime은 데이터가 새로운 것으로 간주되는 기간으로, 데이터가 오래되면 쿼리에 대한 새로운 호출은 서버에서 다시 가져오는 것을 트리거합니다.
-기본값은 0입니다.
-
-### 예시
-
-PostList를 예시로 들어보겠습니다.
-PostList 컴포넌트는 메인 페이지, 채널 페이지에서 동시에 사용되고 있습니다.
-따라서 PostList가 사용하는 무한 스크롤 부분의 query에 옵션들을 변경하면서 확인해보겠습니다.
-
-```
-const {
-    data = { pages: [], pageParams: [] },
-    hasNextPage,
-    fetchNextPage
-  } = useInfiniteQuery(['posts'], ({ pageParam = 0 }) => fetchData(pageParam), {
-    getNextPageParam: (lastPage, allPages) => {
-      if (lastPage.length === 0) {
-        return undefined;
-      }
-
-      return allPages.length;
-    },
-    staleTime: 2000, // staletime 값 변경
-    cacheTime: 0 // cachetime 값 변경
+  const { data: user } = useQuery<User>({
+    queryKey: userKeys.user,
+    queryFn: getUser,
++   staleTime: Infinity,
+    suspense: true
   });
+
+  // ...
+
+  return { user, clearUser, initialUser };
+};
+
+export default useUser;
 ```
 
-- staleTime이 2초인 경우(cachetime 0)
+staleTime을 Infinity로 설정해 영구적으로 fresh한 데이터로 간주하도록 하였고 아래와 같이 페이지를 변경하였을 때 API 재요청 문제를 해결할 수 있었다.
 
-https://github.com/prgrms-fe-devcourse/FEDC4_HONKOK_JunilHwang/assets/45515388/7a2771e2-1b68-4da4-a303-b178d7fb0b07
+<img
+  src="/images/posts/tanstack-query-stale-cache-time/2_after.png"
+  width="400px"
+/>
 
-staleTime이 2초이기 때문에 홈페이지에 뜬 게시글 리스트가 2초 이내에 채널로 이동한 경우 홈페이지에 뜬 게시글들이 채널페이지에서도 동일하게 출력되는 것을 볼 수 있습니다.
+만약 user의 상태가 변경되는 작업(ex: 새로운 글 작성)을 한다면 쿼리 무효화를 사용해 다시 user 상태를 불러오는 과정이 필요하다.
 
-그럼 staleTime의 역할을 이해할 수 있을 것 같습니다!....
-staleTime은 react-query가 데이터를 받은 후 몇초까지 해당 데이터를 유효한 데이터로 간주할 것인지에 대한 시간입니다.
-staleTime이 2초라면 2초동안은 해당 데이터는 유효한 데이터로 간주해서 또다시 api 요청을 보내지 않는 것으로 이해할 수 있습니다.
+```js {3-5}
+return useMutation({
+  mutationFn: { mutationFn },
+  onSuccess: async () => {
+    await queryClient.invalidateQueries(userKeys.user);
+  },
+});
+```
 
-그럼 cacheTime은 뭘까요?? 위에서는 비활성화 데이터를 저장하는 기간이라고 하는데 비활성화 데이터는 또 뭘까요?
+## stale time과 cache time 이란?
 
-비활성화 상태(inactive)는 query가 캐싱하고 있는 데이터를 사용하지 않는 상태를 의미합니다.
+stale time 개념을 사용해 문제를 해결한 후, cache time은 무엇인지 궁금했다. 이름만 생각했을 땐 stale time과 cache time의 역할이 비슷하게 생각되었기 때문이다.
 
-위의 상태에서는 `작성한 글 보기`때문에 `'post'`로 캐싱하고 있는 데이터가 사용하고 있는 상태입니다.
+cacheTime과 staleTime, 이 두 옵션은 모두 캐시된 데이터와 관련이 있지만 데이터에 대해 서로 다른 것을 제어한다.
+간단히 요약하면 다음과 같다.
 
-`작성한 글 보기`가 없는 페이지로 이동하게 되면 더이상 `'post'`로 캐싱하고 있는 데이터가 사용하고 있지 않기 때문에 inactive 상태로 넘어간 것을 볼 수 있습니다.
+### stale time
 
-cacheTime의 역할은 inactive 상태에서 캐싱하고 있는 데이터를 얼마나 유지할 것인지를 담당합니다. 아래의 예시로 확인해 보겠습니다.
+**staleTime**은 데이터가 fresh한 것(stale하지 않은)으로 간주되는 기간으로, 데이터가 stale한 상태라면 서버에서 다시 fresh한 데이터를 가져온다.
+기본값은 0이다.
 
-- cacheTime이 5초인 경우(staletime 0, 데이터 스로틀링 상태 slow-3G)
+즉, **staleTime**은 tanstack query가 데이터를 받은 후 해당 데이터를 유효한(fresh) 데이터로 간주할 것인지에 대한 시간이다.
+만약 staleTime이 2초라면 2초 동안 해당 데이터는 유효한 데이터로 간주해서 다시 api 요청을 보내지 않는 것으로 이해할 수 있다.
 
-https://github.com/prgrms-fe-devcourse/FEDC4_HONKOK_JunilHwang/assets/45515388/8d5a9903-6415-4201-84f6-49b64ba1f22a
+### cache time
 
-위의 동영상에서 5초 이내에 `'post'`를 사용하고 있는 페이지로 다시 이동하게 된다면 데이터들이 그대로 남아있는 상태에서 fetching이 진행되는 것을 알 수 있습니다.
-하지만 5초가 지난 후 `'post'`를 사용하는 페이지로 이동하면 캐싱된 데이터가 없어 빈 화면을 보여주다가 fetching이 완료된 후에 받아온 데이터들을 보여주고 있습니다.
+**cacheTime**은 캐시에서 비활성 데이터를 삭제하기 전에 Tanstack Query가 저장하는 기간으로 기본값은 5분이다. <br/>
+여기서 **비활성화 상태(inactive)** 는 tanstack query가 캐싱하고 있는 데이터를 사용하지 않는 상태를 의미한다.
 
-즉 `statetime`은 데이터를 다시 받아올지 결정하는 시간이고 `cachetime`은 비활성화 상태에서 데이터를 얼마나 유지할지 결정하는 시간을 말합니다.
+렌더링되는 화면에서 tanstack query가 캐싱하고 있는 데이터를 사용하고 있는 상태면 active 상태이지만
+캐싱하고 있는 데이터를 사용하지 않는 화면으로 전환하면 inactive 상태로 전환된다.
 
-### 그럼 만약에 staleTime은 Infinity인데 cacheTime은 0이라면 어떻게 될까요?
+<img
+  src="/images/posts/tanstack-query-stale-cache-time/3_cacheTime.png"
+  width="600px"
+/>
 
-staleTime이 무한이지만 cacheTime은 0으로 inactive 상태로 들어간 캐싱 데이터는 바로 삭제되기 때문에 캐싱 데이터가 필요한 페이지로 재진입한다면 캐싱할 데이터가 없어 staleTime이 무한이여도 react-query는 다시 데이터를 fetching해오게 됩니다!
+즉, **cacheTime**의 역할은 inactive 상태에서 캐싱하고 있는 데이터를 얼마나 유지할 것인지를 담당하며
+cacheTime이 지나기 전에 캐시되었지만 stale 상태인 데이터를 사용하는 컴포넌트가 다시 마운트 되면, 데이터를 fetching하는 동안 캐시 데이터를 보여준다.
+
+### staleTime Infinity, cacheTime 0?
+
+그럼 만약 staleTime은 Infinity인데 cacheTime은 0이라면 어떻게 될까?
+
+staleTime이 무한이지만 cacheTime은 0으로 inactive 상태로 들어간 캐싱 데이터는 바로 삭제되기 때문에 캐시 데이터가 필요한 페이지로 재진입한다면
+캐싱할 데이터가 없어 staleTime이 무한이여도 tanstack query는 데이터를 refetching 해야한다.
+
+## 참고 문서
+
+- [Why cacheTime in React Query should always be bigger than staleTime](https://www.codemzy.com/blog/react-query-cachetime-staletime)
