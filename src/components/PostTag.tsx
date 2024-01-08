@@ -22,7 +22,7 @@ export default function PostTag({
           : { pathname: '/post', query: { tag } }
       }
       {...rest}
-      className={`flex items-center justify-center rounded-xl bg-gray-100 px-3 py-1 text-sm text-secondary transition-colors hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600 ${className}`}
+      className={`flex shrink-0 items-center justify-center rounded-xl bg-gray-100 px-3 py-1 text-sm text-secondary transition-colors hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600 ${className}`}
     >
       {tag}
       {count && <span className="ml-1 text-xs text-gray-400">({count})</span>}

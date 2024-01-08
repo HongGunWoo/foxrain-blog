@@ -13,21 +13,13 @@ export default function Posts({
   return (
     <div className="h-full w-full">
       <div className="mb-7 flex w-full gap-2 overflow-y-auto">
-        <PostTag
-          tag="All"
-          className={
-            !activeTag
-              ? '!bg-primary !text-white'
-              : '!text-gray-500  dark:!text-gray-200 '
-          }
-        />
         {Object.keys(postTagsCount).map((tag) => (
           <PostTag
             key={tag}
             tag={tag}
             count={postTagsCount[tag]}
             className={
-              activeTag === tag
+              activeTag === tag || (!activeTag && tag === 'All')
                 ? '!bg-primary !text-white'
                 : '!text-gray-500  dark:!text-gray-100 '
             }

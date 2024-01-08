@@ -5,6 +5,8 @@ const tagsCount: Record<string, number> = {};
 const getAllPostTags = () => {
   if (Object.keys(tagsCount).length) return tagsCount;
 
+  tagsCount['All'] = allPosts.length;
+
   allPosts.forEach((post) => {
     post.tags.forEach((tag) => {
       if (tagsCount[tag]) {
