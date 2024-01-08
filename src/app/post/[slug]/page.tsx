@@ -7,7 +7,6 @@ import { format } from 'date-fns';
 import CustomLink from '@/components/CustomLink';
 import TocSide from '@/containers/post/slug/TocSide';
 import Giscus from '@/components/Giscus';
-import Image from 'next/image';
 
 const mdxComponents: MDXComponents = {
   a: ({ href, children }) => (

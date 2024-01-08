@@ -78,14 +78,14 @@ export default function Header() {
         className="sticky top-0 z-[999] mb-7 flex h-9 items-center justify-between backdrop-blur-sm transition-transform duration-500"
         ref={navContainerRef}
       >
-        <nav className="flex gap-2 font-semibold text-gray-300" ref={navRef}>
+        <nav className="flex gap-2 font-semibold text-gray-400" ref={navRef}>
           {headerNavLinks
             .filter((link) => link.title !== 'Home')
             .map((link) => (
               <CustomLink
                 key={link.title}
                 href={link.href}
-                className="transition-colors hover:text-gray-400"
+                className="transition-colors hover:text-primary"
               >
                 {link.title}
               </CustomLink>
