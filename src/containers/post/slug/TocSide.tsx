@@ -3,7 +3,7 @@
 import CustomLink from '@/components/CustomLink';
 import getScrollTop from '@/utils/getScrollTop';
 import type { Toc } from 'pliny/mdx-plugins/remark-toc-headings.js';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 interface TocSideProps {
   toc: Toc;
@@ -18,6 +18,8 @@ const depthStyles: Record<number, string> = {
 
 export default function TocSide({ toc }: TocSideProps) {
   const [activeToc, setActiveToc] = useState('');
+  const [fixedToc, setFixedToc] = useState(false);
+  const tocRef = useRef<HTMLDivElement>(null);
 
   const getActiveToc = useCallback(() => {
     const scrollTop = getScrollTop();
@@ -33,6 +35,14 @@ export default function TocSide({ toc }: TocSideProps) {
       .find((headingTop) => scrollTop >= headingTop.top - 10);
 
     setActiveToc(currentHeading ? currentHeading.value : '');
+
+    if (!tocRef.current) return;
+
+    if (tocRef.current.getBoundingClientRect().top <= 80) {
+      setFixedToc(true);
+    } else {
+      setFixedToc(false);
+    }
   }, [toc]);
 
   useEffect(() => {
@@ -46,9 +56,13 @@ export default function TocSide({ toc }: TocSideProps) {
   }, [getActiveToc]);
 
   return (
-    <div className="not-prose relative">
+    <div ref={tocRef} className="not-prose relative">
       <nav className="absolute left-full hidden lg:block">
-        <ul className="fixed ml-9 space-y-1 border-l-2 py-1 pl-2">
+        <ul
+          className={`ml-12 w-60 space-y-1 border-l-2 py-1 pl-2 ${
+            fixedToc && 'fixed top-20'
+          }`}
+        >
           {toc.map((t) => (
             <li
               key={t.url}
