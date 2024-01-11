@@ -13,14 +13,14 @@ export default function PostPreviewItem({
   post,
   detail = false,
 }: PostPreviewItemProps) {
-  const { date, title, url, summary, body } = post;
+  const { date, title, url, summary, body, thumbnail } = post;
 
   return (
     <li>
       <article className={`${detail && 'flex flex-col sm:flex-row'}`}>
         <CustomLink href={url}>
           <Image
-            src="https://picsum.photos/1000/1000"
+            src={thumbnail || '/images/profile.jpeg'}
             width={detail ? 500 : 5000}
             height={detail ? 180 : 3000}
             alt={`${title} image`}

@@ -7,6 +7,7 @@ import { format } from 'date-fns';
 import CustomLink from '@/components/CustomLink';
 import TocSide from '@/containers/post/slug/TocSide';
 import Giscus from '@/components/Giscus';
+import Image from 'next/image';
 
 const mdxComponents: MDXComponents = {
   a: ({ href, children }) => (
@@ -37,20 +38,31 @@ export default function Post({ params }: { params: { slug: string } }) {
   if (!post) notFound();
 
   const MDXContent = useMDXComponent(post.body.code);
+  const { title, date, toc, thumbnail } = post;
 
   return (
-    <div className="relative">
-      <article className="prose dark:prose-invert prose-img:mx-auto">
-        <div className="mb-8 space-y-6">
-          <h1 className="mb-2 text-4xl">{post.title}</h1>
-          <time dateTime={post.date} className="text-sm text-gray-300">
-            {format(new Date(post.date), 'yyyy-MM-dd')}
-          </time>
-        </div>
-        <TocSide toc={post.toc} />
-        <MDXContent components={mdxComponents} />
-        <Giscus />
-      </article>
-    </div>
+    <article className="prose relative dark:prose-invert prose-img:mx-auto">
+      <div className="mb-8 space-y-6">
+        <h1 className="mb-2 text-4xl">{title}</h1>
+        <time dateTime={date} className="text-sm text-gray-300">
+          {format(new Date(date), 'yyyy-MM-dd')}
+        </time>
+        {/* {
+          thumbnail && (
+
+          )
+        } */}
+        <Image
+          src={thumbnail || '/images/profile.jpeg'}
+          width={500}
+          height={180}
+          alt={`${title} image`}
+          className="mb-1 aspect-[5/3] w-full rounded-lg object-cover"
+        />
+      </div>
+      <TocSide toc={toc} />
+      <MDXContent components={mdxComponents} />
+      <Giscus />
+    </article>
   );
 }
