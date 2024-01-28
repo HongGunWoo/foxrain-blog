@@ -32,7 +32,7 @@ export default function TocSide({ toc }: TocSideProps) {
     const currentHeading = headingTops
       .slice()
       .reverse()
-      .find((headingTop) => scrollTop >= headingTop.top - 10);
+      .find((headingTop) => scrollTop >= headingTop.top - 25);
 
     setActiveToc(currentHeading ? currentHeading.value : '');
 

@@ -22,17 +22,18 @@ export default function PostPreviewItem({
           <Image
             src={thumbnail || '/images/profile.jpeg'}
             width={detail ? 500 : 5000}
-            height={detail ? 180 : 3000}
+            height={detail ? 180 : 1800}
             alt={`${title} image`}
-            className={`mb-1 aspect-5/3 w-full rounded-lg object-cover ${
+            className={`mb-1 aspect-5/3 w-full rounded-lg object-cover shadow-md ${
               detail && 'sm:min-w-[20rem]'
             }`}
+            quality={100}
             priority={true}
           />
         </CustomLink>
         <div
-          className={`flex flex-col gap-1 sm:justify-between ${
-            detail && 'mb-2 mt-1 sm:mx-3 sm:gap-3'
+          className={`mt-3 flex flex-col gap-2 sm:justify-between ${
+            detail && 'mb-1 mt-[0.15rem] sm:mx-3'
           }`}
         >
           <CustomLink
@@ -42,7 +43,7 @@ export default function PostPreviewItem({
             <h1
               className={`${
                 detail ? 'text-xl' : 'text-lg'
-              } font-semibold leading-5`}
+              } break-keep font-semibold leading-5`}
             >
               {title}
             </h1>
@@ -53,7 +54,7 @@ export default function PostPreviewItem({
             </p>
           )}
           {detail && (
-            <div className="my-3 flex gap-2 sm:my-1">
+            <div className="my-1 flex gap-2">
               {post.tags.map((tag) => (
                 <PostTag key={tag} tag={tag} />
               ))}

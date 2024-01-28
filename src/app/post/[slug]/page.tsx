@@ -43,20 +43,16 @@ export default function Post({ params }: { params: { slug: string } }) {
   return (
     <article className="prose relative dark:prose-invert prose-img:mx-auto">
       <div className="mb-8 space-y-6">
-        <h1 className="mb-2 text-4xl">{title}</h1>
+        <h1 className="mb-2 break-keep text-4xl">{title}</h1>
         <time dateTime={date} className="text-sm text-gray-300">
           {format(new Date(date), 'yyyy-MM-dd')}
         </time>
-        {/* {
-          thumbnail && (
-
-          )
-        } */}
         <Image
           src={thumbnail || '/images/profile.jpeg'}
-          width={500}
-          height={180}
+          width={768}
+          height={461}
           alt={`${title} image`}
+          quality={100}
           className="mb-1 aspect-[5/3] w-full rounded-lg object-cover"
         />
       </div>
