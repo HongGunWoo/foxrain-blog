@@ -19,7 +19,7 @@ export default function MyInfo() {
           <strong className="text-primary">개발자 홍건우</strong>
           {`\n`}입니다.
         </p>
-        <div className="absolute flex items-center gap-3 pl-1">
+        <div className="absolute mt-1 flex items-center">
           <ContactList />
         </div>
       </div>
