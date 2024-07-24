@@ -69,7 +69,7 @@ export default function Header() {
           <div className="ml-11 mt-[1.7rem] text-3xl font-bold">
             {siteMetadata.headerTitle}
           </div>
-          <small className="fon-bold text-sm text-gray-300 transition-colors group-hover:text-primary">
+          <small className="fon-bold pl-1 text-sm text-gray-300 transition-colors group-hover:text-primary">
             devlog
           </small>
         </CustomLink>
@@ -78,7 +78,7 @@ export default function Header() {
         className="sticky top-0 z-[999] mb-7 flex h-9 items-center justify-between backdrop-blur-sm transition-transform duration-500"
         ref={navContainerRef}
       >
-        <nav className="flex gap-2 font-semibold text-gray-400" ref={navRef}>
+        <nav className="flex gap-4 font-semibold text-gray-400" ref={navRef}>
           {headerNavLinks
             .filter((link) => link.title !== 'Home')
             .map((link) => (
