@@ -74,10 +74,6 @@ export default function About() {
           ))}
         </ul>
       </AboutItem>
-      <AboutItem title="Education">
-        <h3 className="text-lg font-bold">금오공과대학교</h3>
-        <p>컴퓨터공학과 (2018.03 ~ )</p>
-      </AboutItem>
     </div>
   );
 }
