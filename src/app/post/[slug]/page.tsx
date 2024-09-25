@@ -48,7 +48,7 @@ export default function Post({ params }: { params: { slug: string } }) {
           {format(new Date(date), 'yyyy-MM-dd')}
         </time>
         <Image
-          src={thumbnail || '/images/profile.jpeg'}
+          src={thumbnail || '/images/sub-profile.jpeg'}
           width={768}
           height={461}
           alt={`${title} image`}

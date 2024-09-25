@@ -20,7 +20,7 @@ export default function PostPreviewItem({
       <article className={`${detail && 'flex flex-col sm:flex-row'}`}>
         <CustomLink href={url}>
           <Image
-            src={thumbnail || '/images/profile.jpeg'}
+            src={thumbnail || '/images/sub-profile.jpeg'}
             width={detail ? 500 : 5000}
             height={detail ? 180 : 1800}
             alt={`${title} image`}
