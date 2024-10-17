@@ -7,8 +7,11 @@ import ThemeSwitch from './ThemeSwitch';
 import Image from 'next/image';
 import { useEffect, useRef } from 'react';
 import getScrollTop from '@/utils/getScrollTop';
+import { usePathname } from 'next/navigation';
 
 export default function Header() {
+  const pathname = usePathname();
+
   const logoRef = useRef<HTMLImageElement>(null);
   const navRef = useRef<HTMLDivElement>(null);
   const navContainerRef = useRef<HTMLDivElement>(null);
@@ -78,18 +81,23 @@ export default function Header() {
         className="sticky top-0 z-[999] mb-7 flex h-9 items-center justify-between backdrop-blur-sm transition-transform duration-500"
         ref={navContainerRef}
       >
-        <nav className="flex gap-3.5 font-semibold text-gray-400" ref={navRef}>
-          {headerNavLinks
-            .filter((link) => link.title !== 'Home')
-            .map((link) => (
-              <CustomLink
-                key={link.title}
-                href={link.href}
-                className="transition-colors hover:text-primary"
-              >
-                {link.title}
-              </CustomLink>
-            ))}
+        <nav ref={navRef}>
+          <ul className="flex gap-3.5 font-semibold">
+            {headerNavLinks
+              .filter((link) => link.title !== 'Home')
+              .map((link) => (
+                <li key={link.title}>
+                  <CustomLink
+                    href={link.href}
+                    className={`transition-colors hover:text-primary ${
+                      pathname === link.href ? 'text-primary' : 'text-gray-400'
+                    }`}
+                  >
+                    {link.title}
+                  </CustomLink>
+                </li>
+              ))}
+          </ul>
         </nav>
         <ThemeSwitch />
       </div>
