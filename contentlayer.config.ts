@@ -3,9 +3,9 @@ import rehypeSlug from 'rehype-slug';
 import { extractTocHeadings } from 'pliny/mdx-plugins/remark-toc-headings.js';
 import rehypePrismPlus from 'rehype-prism-plus';
 
-export const Post = defineDocumentType(() => ({
+const Post = defineDocumentType(() => ({
   name: 'Post',
-  filePathPattern: `**/*.mdx`,
+  filePathPattern: `posts/**/*.mdx`,
   contentType: 'mdx',
   fields: {
     title: { type: 'string', required: true },
@@ -26,9 +26,26 @@ export const Post = defineDocumentType(() => ({
   },
 }));
 
+const Note = defineDocumentType(() => ({
+  name: 'Note',
+  filePathPattern: `notes/**/*.mdx`,
+  contentType: 'mdx',
+  fields: {
+    title: { type: 'string', required: true },
+    date: { type: 'date', required: true },
+  },
+  computedFields: {
+    url: {
+      type: 'string',
+      resolve: (note) => `/note/${note._raw.flattenedPath}`,
+    },
+  },
+}));
+
 export default makeSource({
-  contentDirPath: 'posts',
-  documentTypes: [Post],
+  contentDirPath: 'contents',
+  contentDirInclude: ['posts', 'notes'],
+  documentTypes: [Post, Note],
   mdx: {
     rehypePlugins: [
       rehypeSlug,
