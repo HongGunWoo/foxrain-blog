@@ -5,7 +5,7 @@ export default function MyInfo() {
   return (
     <div className="mb-12 mt-5 flex items-center justify-center space-x-6">
       <Image
-        src="/images/sub-profile.jpeg"
+        src="/images/profile.jpeg"
         alt="profile"
         priority={true}
         quality={100}
