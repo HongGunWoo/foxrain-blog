@@ -4,5 +4,20 @@
   "parserOptions": {
     "tsconfigRootDir": "__dirname"
   },
-  "extends": ["next/core-web-vitals", "plugin:prettier/recommended"]
+  "plugins": ["unused-imports"],
+  "extends": ["next/core-web-vitals", "plugin:prettier/recommended"],
+  "rules": {
+    "newline-before-return": "error",
+    "no-unused-vars": "off",
+    "unused-imports/no-unused-imports": "error",
+    "unused-imports/no-unused-vars": [
+      "warn",
+      {
+        "vars": "all",
+        "varsIgnorePattern": "^_",
+        "args": "after-used",
+        "argsIgnorePattern": "^_"
+      }
+    ]
+  }
 }
