@@ -1,5 +1,4 @@
 import { HTMLAttributes } from 'react';
-import CustomLink from './CustomLink';
 import Link from 'next/link';
 
 interface PostTagProps extends HTMLAttributes<HTMLSpanElement> {
