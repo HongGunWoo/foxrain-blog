@@ -3,7 +3,7 @@ title: Tanstack Query stale, cache time의 차이
 date: 2023-09-23
 tags: ['Tanstack Query']
 summary: 'tanstack query v4의 stale time과 cache time의 개념을 알아보며 stale time 개념을 사용해 API 재요청 문제를 해결해보자.'
-thumbnail: '/images/posts/tanstack-query-stale-cache-time/thumbnail.png'
+thumbnail: '/contents/post/tanstack-query-stale-cache-time/thumbnail.png'
 ---
 
 1인 가구를 타겟으로한 SNS 프로젝트를 개발하면서 **tanstack query v4**를 사용해 비동기 상태 관리를 하고있다.
@@ -57,7 +57,7 @@ export default useUser;
 하지만 아래와 같이 useUser hook을 사용하는 페이지로 이동할 때마다 auth-user API를 재요청하는 문제가 발생했다.
 
 <img
-  src="/images/posts/tanstack-query-stale-cache-time/1_before.png"
+  src="/contents/post/tanstack-query-stale-cache-time/1_before.png"
   width="350px"
 />
 
@@ -92,7 +92,7 @@ export default useUser;
 staleTime을 Infinity로 설정해 영구적으로 fresh한 데이터로 간주하도록 하였고 아래와 같이 페이지를 변경하였을 때 API 재요청 문제를 해결할 수 있었다.
 
 <img
-  src="/images/posts/tanstack-query-stale-cache-time/2_after.png"
+  src="/contents/post/tanstack-query-stale-cache-time/2_after.png"
   width="400px"
 />
 
@@ -131,7 +131,7 @@ cacheTime과 staleTime, 이 두 옵션은 모두 캐시된 데이터와 관련�
 캐싱하고 있는 데이터를 사용하지 않는 화면으로 전환하면 inactive 상태로 전환된다.
 
 <img
-  src="/images/posts/tanstack-query-stale-cache-time/3_cacheTime.png"
+  src="/contents/post/tanstack-query-stale-cache-time/3_cacheTime.png"
   width="600px"
 />
 

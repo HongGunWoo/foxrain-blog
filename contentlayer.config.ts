@@ -3,9 +3,12 @@ import rehypeSlug from 'rehype-slug';
 import { extractTocHeadings } from 'pliny/mdx-plugins/remark-toc-headings.js';
 import rehypePrismPlus from 'rehype-prism-plus';
 
+const getFileNameWithoutExtension = (fileName: string) =>
+  fileName.replace('.mdx', '');
+
 const Post = defineDocumentType(() => ({
   name: 'Post',
-  filePathPattern: `posts/**/*.mdx`,
+  filePathPattern: `post/**/*.mdx`,
   contentType: 'mdx',
   fields: {
     title: { type: 'string', required: true },
@@ -15,9 +18,13 @@ const Post = defineDocumentType(() => ({
     thumbnail: { type: 'string' },
   },
   computedFields: {
+    fileName: {
+      type: 'string',
+      resolve: (post) => getFileNameWithoutExtension(post._raw.sourceFileName),
+    },
     url: {
       type: 'string',
-      resolve: (post) => `/post/${post._raw.flattenedPath}`,
+      resolve: (post) => `/${post._raw.sourceFileDir}`,
     },
     toc: {
       type: 'list',
@@ -28,13 +35,17 @@ const Post = defineDocumentType(() => ({
 
 const Note = defineDocumentType(() => ({
   name: 'Note',
-  filePathPattern: `notes/**/*.mdx`,
+  filePathPattern: `note/**/*.mdx`,
   contentType: 'mdx',
   fields: {
     title: { type: 'string', required: true },
     date: { type: 'date', required: true },
   },
   computedFields: {
+    fileName: {
+      type: 'string',
+      resolve: (post) => getFileNameWithoutExtension(post._raw.sourceFileName),
+    },
     url: {
       type: 'string',
       resolve: (note) => `/note/${note._raw.flattenedPath}`,
@@ -43,8 +54,8 @@ const Note = defineDocumentType(() => ({
 }));
 
 export default makeSource({
-  contentDirPath: 'contents',
-  contentDirInclude: ['posts', 'notes'],
+  contentDirPath: 'public/contents',
+  contentDirInclude: ['post', 'note'],
   documentTypes: [Post, Note],
   mdx: {
     rehypePlugins: [

@@ -29,12 +29,12 @@ export async function generateMetadata({
 }: {
   params: { slug: string };
 }) {
-  const post = allPosts.find((post) => post._raw.flattenedPath === params.slug);
+  const post = allPosts.find((post) => post.fileName === params.slug);
   if (!post) notFound();
 }
 
 export default function Post({ params }: { params: { slug: string } }) {
-  const post = allPosts.find((post) => post._raw.flattenedPath === params.slug);
+  const post = allPosts.find((post) => post.fileName === params.slug);
   if (!post) notFound();
 
   const MDXContent = useMDXComponent(post.body.code);
