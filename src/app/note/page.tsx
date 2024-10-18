@@ -26,19 +26,19 @@ export default function Note() {
             <p
               className={`${
                 idx !== 0 ? 'mt-8' : ''
-              } mr-5 w-12 text-base font-medium transition group-hover/year:!opacity-100 group-hover:opacity-60`}
+              } mr-5 w-12 text-base font-medium transition group-hover/year:!opacity-100 group-hover:opacity-20`}
             >
               {year}
             </p>
             <ul
               className={`${
                 idx !== 0 ? 'pt-8' : ''
-              } flex flex-col gap-3 border-l border-gray-200 pl-4 group-hover/year:!opacity-100 group-hover:opacity-60`}
+              } flex flex-col gap-3 border-l border-gray-200 pl-4 transition group-hover/year:!opacity-100 group-hover:opacity-30`}
             >
               {notes.map((note) => (
                 <li
                   key={note._raw.flattenedPath}
-                  className="flex cursor-pointer items-center rounded-md px-1 transition hover:bg-gray-100 hover:!opacity-100 group-hover:opacity-60"
+                  className="flex cursor-pointer items-center rounded-md px-1 transition hover:bg-gray-100 hover:!opacity-100 group-hover:opacity-70"
                 >
                   <h3>{note.title}</h3>
                   <time
@@ -50,11 +50,11 @@ export default function Note() {
                 </li>
               ))}
             </ul>
-            <div
+            {/* <div
               className={`absolute left-14 h-3 w-3 translate-x-1/2 rounded-full bg-primary ${
                 idx !== 0 ? 'top-8' : ''
               } group-hover/year:!opacity-100 group-hover:opacity-60`}
-            />
+            /> */}
           </div>
         );
       })}
