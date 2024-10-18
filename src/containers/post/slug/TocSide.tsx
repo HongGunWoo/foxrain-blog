@@ -26,6 +26,7 @@ export default function TocSide({ toc }: TocSideProps) {
     const headingTops = toc.map(({ value, url }) => {
       const element = document.getElementById(url.slice(1));
       const top = element ? element.getBoundingClientRect().top + scrollTop : 0;
+
       return { value, top };
     });
     if (!headingTops) return;

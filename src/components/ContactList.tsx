@@ -1,6 +1,6 @@
 import siteMetadata from '@/constants/siteMetadata';
 import CustomLink from './CustomLink';
-import { IconGithub, IconMail } from 'public/svgs';
+import { IconGithub } from 'public/svgs';
 
 export default function ContactList() {
   return (

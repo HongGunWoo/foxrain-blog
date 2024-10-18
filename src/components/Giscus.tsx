@@ -22,6 +22,7 @@ export default function Giscus() {
         { giscus: { setConfig: { theme: giscusTheme } } },
         'https://giscus.app',
       );
+
       return;
     }
 
